@@ -1,5 +1,5 @@
 <h1 align="center">
-📖 LangChain-Streamlit-Docker App Template
+📖 LangChain-Chainlit-Docker-Deployment App Template
 </h1>
 
 ![UI](ui.PNG?raw=true)
@@ -7,9 +7,8 @@
 ## 🔧 Features
 
 - Basic Skeleton App configured with `openai` API
-- A ChatBot using LangChain and Streamlit
+- A ChatBot using LangChain and Chainlit
 - Docker Support with Optimisation Cache etc
-- Deployment on Streamlit Public Cloud
 - Deployment on Google Cloud App Engine
 - Deployment on Google Cloud using `Cloud Run`
 
@@ -35,10 +34,10 @@ poetry install
 poetry shell
 ```
 
-3. Run the Streamlit server🚀
+3. Run the Chainlit server🚀
 
 ```bash
-streamlit run app/main.py 
+chainlit run demo_app/main.py
 ```
 
 Run App using Docker
@@ -49,27 +48,19 @@ https://medium.com/@albertazzir/blazing-fast-python-docker-builds-with-poetry-a7
 
 Build the docker container
 
-``docker  build . -t langchain-chat-app:latest ``
+``docker  build . -t langchain-chainlit-chat-app:latest``
 
 To generate Image with `DOCKER_BUILDKIT`, follow below command
 
-```DOCKER_BUILDKIT=1 docker build --target=runtime . -t langchain-chat-app:latest```
+```DOCKER_BUILDKIT=1 docker build --target=runtime . -t langchain-chainlit-chat-app:latest```
 
 1. Run the docker container directly 
 
-``docker run -d --name langchain-chat-app -p 8080:8080 langchain-chat-app ``
+``docker run -d --name langchain-chainlit-chat-app -p 8000:8000 langchain-chainlit-chat-app ``
 
 2. Run the docker container using docker-compose (Recommended)
 
 ``docker-compose up``
-
-
-Deploy App on Streamlit Public Cloud
-------------------------------------
-This app can be deployed on Streamlit Public Cloud using GitHub. Below is the Link to 
-Publicly deployed App
-
-https://langchain-docker-template-amjadraza.streamlit.app/
 
 
 Deploy App on Google App Engine
@@ -101,8 +92,8 @@ I have adopted `Dockerfile` to deploy the app on GCP APP Engine.
 https://langchain-chat.ts.r.appspot.com/
 
 
-Deploy App on Google Cloud using Cloud Run
-------------------------------------------
+Deploy App on Google Cloud using Cloud Run (RECOMMENDED)
+--------------------------------------------------------
 This app can be deployed on Google Cloud using Cloud Run following below steps.
 
 ## Prerequisites
@@ -149,7 +140,7 @@ gcloud projects add-iam-policy-binding langchain-chat \
 
 4. Generate the Docker
 
-`DOCKER_BUILDKIT=1 docker build --target=runtime . -t australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chat-app:latest`
+`DOCKER_BUILDKIT=1 docker build --target=runtime . -t australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chainlit-chat-app:latest`
 
 5. Push Image to Google Artifact's Registry
 
@@ -169,27 +160,27 @@ Create the repository with name `app`
 gcloud artifacts repositories create app \
     --repository-format=docker \
     --location=australia-southeast1 \
-    --description="A Langachain Streamlit App" \
+    --description="A Langachain Chainlit App" \
     --async
 ```
 
 Once ready, let us push the image to location
 
-`docker push australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chat-app:latest`
+`docker push australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chainlit-chat-app:latest`
 
 6. Deploy using Cloud Run
 
 Once image is pushed to Google Cloud Artifacts Registry. Let us deploy the image.
 
 ```
-gcloud run deploy langchain-chat-app --image=australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chat-app:latest \
+gcloud run deploy langchain-chat-app --image=australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chainlit-chat-app:latest \
     --region=australia-southeast1 \
     --service-account=langchain-app-cr@langchain-chat.iam.gserviceaccount.com
 ```
 
 ## Report Feedbacks
 
-As `langchain-streamlit-docker-template` is a template project with minimal example. Report issues if you face any. 
+As `langchain-chainlit-docker-deployment-template` is a template project with minimal example. Report issues if you face any. 
 
 ## DISCLAIMER
 

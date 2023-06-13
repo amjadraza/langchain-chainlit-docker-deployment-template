@@ -1,10 +1,10 @@
 version: '3'
 services:
-  langchain-chat-app:
-    image: langchain-chat-app:latest
+  langchain-chainlit-chat-app:
+    image: langchain-chainlit-chat-app:latest
     build: ./app
-    command: streamlit run demo_app/main.py --server.port 8080
+    command: chainlit run demo_app/main.py
     volumes:
       - ./demo_app/:/app/demo_app
     ports:
-      - 8080:8080
+      - 8000:8000

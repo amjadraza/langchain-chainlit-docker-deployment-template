@@ -1,59 +1,26 @@
 """Python file to serve as the frontend"""
 import sys
 import os
-
 sys.path.append(os.path.abspath('.'))
 
-import streamlit as st
-from streamlit_chat import message
-from demo_app.components.sidebar import sidebar
-from langchain.chains import ConversationChain
-from langchain.llms import OpenAI
+from langchain import PromptTemplate, OpenAI, LLMChain
+import chainlit as cl
 
+from chainlit import user_session
 
-def load_chain():
-    """Logic for loading the chain you want to use should go here."""
-    llm = OpenAI(openai_api_key=st.session_state.get("OPENAI_API_KEY"), temperature=0)
-    chain = ConversationChain(llm=llm)
-    return chain
+user_env = user_session.get("env")
 
+# os.environ["OPENAI_API_KEY"] = ""
 
-def get_text():
-    input_text = st.text_input("You: ", "Hello, how are you?", key="input")
-    return input_text
+template = """Question: {question}
 
+Answer: Let's think step by step."""
 
-if __name__ == "__main__":
+@cl.langchain_factory
+def factory():
+    user_env = cl.user_session.get("env")
+    os.environ["OPENAI_API_KEY"] = user_env.get("OPENAI_API_KEY")
+    prompt = PromptTemplate(template=template, input_variables=["question"])
+    llm_chain = LLMChain(prompt=prompt, llm=OpenAI(temperature=0), verbose=True)
 
-    st.set_page_config(
-        page_title="Chat App: LangChain Demo",
-        page_icon="📖",
-        layout="wide",
-        initial_sidebar_state="expanded", )
-    st.header("📖 Chat App: LangChain Demo")
-    sidebar()
-
-    if not st.session_state.get("open_api_key_configured"):
-        st.error("Please configure your API Keys!")
-    else:
-        chain = load_chain()
-
-        if "generated" not in st.session_state:
-            st.session_state["generated"] = []
-
-        if "past" not in st.session_state:
-            st.session_state["past"] = []
-
-        user_input = get_text()
-
-        if user_input:
-            output = chain.run(input=user_input)
-
-            st.session_state.past.append(user_input)
-            st.session_state.generated.append(output)
-
-        if st.session_state["generated"]:
-
-            for i in range(len(st.session_state["generated"]) - 1, -1, -1):
-                message(st.session_state["generated"][i], key=str(i))
-                message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+    return llm_chain

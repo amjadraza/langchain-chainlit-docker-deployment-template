@@ -1,19 +1,18 @@
 [tool.poetry]
-name = "langchain-streamlit-docker-template"
+name = "langchain-chainlit-docker-template"
 version = "0.1.0"
-description = "A template langchain Streamlit App with Docker"
+description = "A template langchain Chainlit App with Docker Deployments"
 authors = ["Amjad Raza"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "langchain_streamlit_docker_template"}]
+packages = [{include = "langchain_chainlit_docker_deployment_template"}]
 
 
 [tool.poetry.dependencies]
 python = "^3.10"
 langchain = "0.0.184"
 openai = "0.27.7"
-streamlit = "1.22.0"
-streamlit-chat = "0.0.2.2"
+chainlit = "0.2.111"
 
 
 [build-system]
