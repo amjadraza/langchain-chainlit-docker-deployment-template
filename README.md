@@ -4,6 +4,7 @@
 
 ![UI](ui.PNG?raw=true)
 
+
 ## 🔧 Features
 
 - Basic Skeleton App configured with `openai` API
@@ -11,6 +12,8 @@
 - Docker Support with Optimisation Cache etc
 - Deployment on Google Cloud App Engine
 - Deployment on Google Cloud using `Cloud Run`
+
+> Reference repository: https://github.com/amjadraza/langchain-streamlit-docker-template
 
 This repo contains an `main.py` file which has a template for a chatbot implementation.
 
@@ -24,7 +27,7 @@ Depending on the type of your chain, you may also need to change the inputs/outp
 1. Clone the repository📂
 
 ```bash
-git clone https://github.com/amjadraza/langchain-streamlit-docker-template.git
+git clone https://github.com/amjadraza/langchain-chainlit-docker-deployment-template
 ```
 
 2. Install dependencies with [Poetry](https://python-poetry.org/) and activate virtual environment🔨
