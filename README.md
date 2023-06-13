@@ -89,7 +89,7 @@ I have adopted `Dockerfile` to deploy the app on GCP APP Engine.
 
 3. Access the App using 
 
-https://langchain-chat.ts.r.appspot.com/
+https://langchain-chat-app-ex6cbrefpq-ts.a.run.app/
 
 
 Deploy App on Google Cloud using Cloud Run (RECOMMENDED)
@@ -140,7 +140,7 @@ gcloud projects add-iam-policy-binding langchain-chat \
 
 4. Generate the Docker
 
-`DOCKER_BUILDKIT=1 docker build --target=runtime . -t australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chainlit-chat-app:latest`
+`DOCKER_BUILDKIT=1 docker build --target=runtime . -t australia-southeast1-docker.pkg.dev/langchain-chat/clapp/langchain-chainlit-chat-app:latest`
 
 5. Push Image to Google Artifact's Registry
 
@@ -157,7 +157,7 @@ Check the artifacts locations
 Create the repository with name `app`
 
 ```
-gcloud artifacts repositories create app \
+gcloud artifacts repositories create clapp \
     --repository-format=docker \
     --location=australia-southeast1 \
     --description="A Langachain Chainlit App" \
@@ -166,17 +166,25 @@ gcloud artifacts repositories create app \
 
 Once ready, let us push the image to location
 
-`docker push australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chainlit-chat-app:latest`
+`docker push australia-southeast1-docker.pkg.dev/langchain-chat/clapp/langchain-chainlit-chat-app:latest`
 
 6. Deploy using Cloud Run
 
 Once image is pushed to Google Cloud Artifacts Registry. Let us deploy the image.
 
 ```
-gcloud run deploy langchain-chat-app --image=australia-southeast1-docker.pkg.dev/langchain-chat/app/langchain-chainlit-chat-app:latest \
+gcloud run deploy langchain-chat-app --image=australia-southeast1-docker.pkg.dev/langchain-chat/clapp/langchain-chainlit-chat-app:latest \
     --region=australia-southeast1 \
-    --service-account=langchain-app-cr@langchain-chat.iam.gserviceaccount.com
+    --service-account=langchain-app-cr@langchain-chat.iam.gserviceaccount.com \
+    --port=8000
 ```
+
+7. Test the App Yourself
+
+You can try the app using below link 
+
+https://langchain-chat-app-ex6cbrefpq-ts.a.run.app/
+
 
 ## Report Feedbacks
 
