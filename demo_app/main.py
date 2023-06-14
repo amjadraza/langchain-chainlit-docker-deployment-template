@@ -16,7 +16,7 @@ template = """Question: {question}
 
 Answer: Let's think step by step."""
 
-@cl.langchain_factory
+@cl.langchain_factory(use_async=True)
 def factory():
     user_env = cl.user_session.get("env")
     os.environ["OPENAI_API_KEY"] = user_env.get("OPENAI_API_KEY")

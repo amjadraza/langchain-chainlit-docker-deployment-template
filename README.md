@@ -147,6 +147,16 @@ gcloud projects add-iam-policy-binding langchain-chat \
 
 5. Push Image to Google Artifact's Registry
 
+Create the repository with name `clapp`
+
+```
+gcloud artifacts repositories create clapp \
+    --repository-format=docker \
+    --location=australia-southeast1 \
+    --description="A Langachain Chainlit App" \
+    --async
+```
+
 Configure-docker 
 
 `gcloud auth configure-docker australia-southeast1-docker.pkg.dev`
@@ -157,15 +167,7 @@ Check the artifacts locations
 
 `gcloud artifacts locations list`
 
-Create the repository with name `app`
 
-```
-gcloud artifacts repositories create clapp \
-    --repository-format=docker \
-    --location=australia-southeast1 \
-    --description="A Langachain Chainlit App" \
-    --async
-```
 
 Once ready, let us push the image to location
 

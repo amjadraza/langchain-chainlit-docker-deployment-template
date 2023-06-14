@@ -23,7 +23,7 @@ user_env = ["OPENAI_API_KEY"]
 hide_cot = false
 
 # Link to your github repo. This will add a github button in the UI's header.
-# github = ""
+github = "https://github.com/amjadraza/langchain-chainlit-docker-deployment-template"
 
 # Limit the number of requests per user.
 #request_limit = "10 per day"

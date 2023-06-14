@@ -10,9 +10,9 @@ packages = [{include = "langchain_chainlit_docker_deployment_template"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-langchain = "0.0.184"
-openai = "0.27.7"
-chainlit = "0.2.111"
+langchain = "0.0.199"
+openai = "0.27.8"
+chainlit = "0.3.0"
 
 
 [build-system]
