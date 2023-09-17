@@ -51,4 +51,4 @@ COPY ./chainlit.md /home/appuser/app/chainlit.md
 COPY --chown=appuser:appuser ./.chainlit /home/appuser/app/.chainlit
 COPY ./demo_app /home/appuser/app/demo_app
 
-CMD ["chainlit", "run", "./demo_app/main.py"]
+CMD ["chainlit", "run", "/home/appuser/app/demo_app/main.py"]
