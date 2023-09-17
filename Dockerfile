@@ -18,7 +18,7 @@ RUN groupadd -g 1001 appgroup && \
 USER 1001
 
 RUN pip install --user --no-cache-dir --upgrade pip && \
-    pip install --user --no-cache-dir poetry
+    pip install --user --no-cache-dir poetry==1.4.2
 
 WORKDIR /home/appuser/app/
 COPY pyproject.toml poetry.lock /home/appuser/app/
