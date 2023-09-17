@@ -3,7 +3,7 @@ services:
   langchain-chainlit-chat-app:
     image: langchain-chainlit-chat-app:latest
     build: .
-    command: chainlit run /home/appuser/app/demo_app/main.py
     ports:
       - "8000:8000"
     working_dir: /home/appuser/app/
+    command: ["chainlit", "run", "/home/appuser/app/demo_app/main.py"]
