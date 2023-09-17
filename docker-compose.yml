@@ -2,8 +2,8 @@ version: '3'
 services:
   langchain-chainlit-chat-app:
     image: langchain-chainlit-chat-app:latest
-    build: ./app
-    command: chainlit run demo_app/main.py
+    build: ./demo_app
+    command: chainlit run /app/demo_app/main.py
     volumes:
       - ./demo_app/:/app/demo_app
     ports:
