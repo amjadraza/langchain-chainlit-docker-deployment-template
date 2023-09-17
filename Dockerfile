@@ -18,11 +18,11 @@ RUN groupadd -g 1001 appgroup && \
 USER 1001
 
 RUN pip install --user --no-cache-dir --upgrade pip && \
-    pip install --user --no-cache-dir poetry==1.4.2
+    pip install --user --no-cache-dir poetry
 
-WORKDIR /app
-COPY pyproject.toml poetry.lock /app/
-RUN poetry install --without dev --no-cache --no-root && \
+WORKDIR /home/appuser/app/
+COPY pyproject.toml poetry.lock /home/appuser/app/
+RUN poetry install --no-cache --no-root && \
     rm -rf $POETRY_CACHE_DIR
 
 # The runtime image, used to just run the code provided its virtual environment
@@ -31,8 +31,8 @@ FROM python:3.11-slim-buster as runtime
 # Environment setup for runtime
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:/home/appuser/.local/bin:$PATH" \
+    VIRTUAL_ENV=/home/appuser/app/.venv \
+    PATH="/home/appuser/app/.venv/bin:/home/appuser/.local/bin:$PATH" \
     HOST=0.0.0.0 \
     LISTEN_PORT=8000
 
@@ -41,14 +41,14 @@ RUN groupadd -g 1001 appgroup && \
 
 USER 1001
 EXPOSE 8000
-WORKDIR /app
+WORKDIR /home/appuser/app/
 
 # Copy virtual environment from builder
-COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+COPY --chown=appuser:appuser --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
 # Copy application files
-COPY ./demo_app /app/demo_app
-COPY ./.chainlit /app/.chainlit
-COPY chainlit.md /app/
+COPY ./chainlit.md /home/appuser/app/chainlit.md
+COPY --chown=appuser:appuser ./.chainlit /home/appuser/app/.chainlit
+COPY ./demo_app /home/appuser/app/demo_app
 
 CMD ["chainlit", "run", "./demo_app/main.py"]
